@@ -29,7 +29,7 @@ def get_text_from_region(region, config="", save_debug=False):
 
 def save_to_json(data, path):
     with open(path, 'w') as f:
-        json.dump(data, f)
+        json.dump(data, f, indent=4)
 
 def load_from_json(path):
     # Cek apakah file ada
