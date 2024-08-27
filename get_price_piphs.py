@@ -208,6 +208,7 @@ if __name__ == '__main__':
     
     if select == '0':
         add_required_locations_and_regions()
+        print("Please run the script again after adding required locations and regions.")
     elif select == '1':
         one_by_one(data)
     elif select == '2':
