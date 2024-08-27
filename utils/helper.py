@@ -2,6 +2,7 @@ import pyautogui as pg
 import pytesseract as pt
 from PIL import Image, ImageEnhance
 import json
+import os
 
 def preprocess_image(image, save_debug=False):
     # Hanya lakukan langkah yang diperlukan
@@ -31,9 +32,19 @@ def save_to_json(data, path):
         json.dump(data, f)
 
 def load_from_json(path):
+    # Cek apakah file ada
+    if not os.path.exists(path):
+        print(f"File '{path}' tidak ditemukan. Pastikan untuk menjalankan 'Add required location and region' terlebih dahulu.")
+        return None
+    
+    # Cek apakah file kosong
+    if os.path.getsize(path) == 0:
+        print(f"File '{path}' kosong. Pastikan untuk menjalankan 'Add required location and region' terlebih dahulu.")
+        return None
+
     try:
         with open(path, 'r') as file:
             return json.load(file)
-    except FileNotFoundError:
-        print(f"File '{path}' tidak ditemukan. Pastikan untuk menjalankan 'Add required location and region' terlebih dahulu.")
+    except json.JSONDecodeError:
+        print(f"File '{path}' tidak berisi data JSON yang valid.")
         return None
