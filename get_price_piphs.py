@@ -161,11 +161,16 @@ def scan_one_day_full(data):
         while j < total_item:
             print(f'Current type: {list_type[i]}\ncurrent item: {list_item[j]}')
             
-            print('Press "r" to submit or "any key" to repeat')
+            print('Press "r" to submit, "b" to go back, or any other key to repeat')
             key = keyboard.read_event()
             
             if key.event_type == keyboard.KEY_DOWN and key.name == 'r':
                 pyautogui.click(submit_button_pos)
+            elif key.event_type == keyboard.KEY_DOWN and key.name == 'b':
+                print('Going back to previous item...\n')
+                time.sleep(1)
+                j = max(0, j - 1)  # Go back to previous iteration, but not below 0
+                continue
             elif key.event_type == keyboard.KEY_DOWN:
                 print('Repeating current item...\n')
                 time.sleep(1)
