@@ -10,3 +10,4 @@ Pastikan Anda memiliki prasyarat berikut yang sudah diinstal pada sistem Anda:
   - `Pillow`
   - `keyboard`
   - `pyperclip`
+- Untuk PIPHS, persiapkan tampilan layar seperti pada ./img/tampilan_PIPHS.png
