@@ -1,3 +1,6 @@
+## Cara menjalankan
+Enter `py name_file.py` pada terminal
+
 ## Prasyarat
 
 Pastikan Anda memiliki prasyarat berikut yang sudah diinstal pada sistem Anda:
@@ -10,4 +13,4 @@ Pastikan Anda memiliki prasyarat berikut yang sudah diinstal pada sistem Anda:
   - `Pillow`
   - `keyboard`
   - `pyperclip`
-- Untuk PIPHS, persiapkan tampilan layar seperti pada ./img/tampilan_PIPHS.png
+- Untuk PIPHS, persiapkan tampilan seperti layar pada ./img/contoh_tampilan_PIPHS.png (hanya saran dan agar dapat menentukan region/location)
