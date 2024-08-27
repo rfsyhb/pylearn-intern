@@ -1,6 +1,7 @@
 import pyautogui as pg
 import pytesseract as pt
 from PIL import Image, ImageEnhance
+import json
 
 def preprocess_image(image, save_debug=False):
     # Hanya lakukan langkah yang diperlukan
@@ -24,3 +25,15 @@ def get_text_from_region(region, config="", save_debug=False):
     image = preprocess_image(screenshot, save_debug=save_debug)
     text = pt.image_to_string(image, config=config)
     return text
+
+def save_to_json(data, path):
+    with open(path, 'w') as f:
+        json.dump(data, f)
+
+def load_from_json(path):
+    try:
+        with open(path, 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print(f"File '{path}' tidak ditemukan. Pastikan untuk menjalankan 'Add required location and region' terlebih dahulu.")
+        return None
