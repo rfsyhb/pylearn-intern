@@ -86,7 +86,7 @@ def one_by_one(data):
         keyboard.wait('ctrl')
         pyautogui.press('backspace')
         
-        raw_price = hp.get_text_from_region(price_region, config="--psm 7 --oem 1 -l eng", save_debug=True)
+        raw_price = hp.get_text_from_region(price_region, config="--psm 7 --oem 1 -l eng", save_debug=False)
         print(raw_price)
 
         # get the numbers from the string
@@ -120,7 +120,7 @@ def scan_one_day_one_type(data):
         
         print('Press s to get price')
         keyboard.wait('s')
-        raw_price = hp.get_text_from_region(price_region, config="--psm 7 --oem 1 -l eng", save_debug=True)
+        raw_price = hp.get_text_from_region(price_region, config="--psm 7 --oem 1 -l eng", save_debug=False)
         print(raw_price)
 
         # get the numbers from the string
@@ -141,10 +141,13 @@ def scan_one_day_one_type(data):
 Versi ketiga, scan satu hari penuh untuk semua jenis pasar
 """
 def scan_one_day_full(data):
+    time_started = time.time()
+    
     price_region = tuple(data['price_region'])
     list_item_pos = tuple(data['list_item_pos'])
     submit_button_pos = tuple(data['submit_button_pos'])
     type_market_pos = tuple(data['type_market_pos'])
+    recent_raw_price = "None"
     
     list_item = [
                     'Beras Bawah I', 'Beras Bawah II', 'Beras Medium I', 'Beras Medium II', 'Beras Super I', 'Beras Super II',
@@ -161,7 +164,7 @@ def scan_one_day_full(data):
         while j < total_item:
             print(f'Current type: {list_type[i]}\ncurrent item: {list_item[j]}')
             
-            print('Press "r" to submit, "b" to go back, or any other key to repeat')
+            print(f'Latest {recent_raw_price} - Press "r"/"b"/"any" - current: {list_item[j]} - {list_type[i]}')
             key = keyboard.read_event()
             
             if key.event_type == keyboard.KEY_DOWN and key.name == 'r':
@@ -178,8 +181,8 @@ def scan_one_day_full(data):
             
             print('Press s to get price')
             keyboard.wait('s')
-            raw_price = hp.get_text_from_region(price_region, config="--psm 7 --oem 1 -l eng", save_debug=True)
-            print(raw_price)
+            raw_price = hp.get_text_from_region(price_region, config="--psm 7 --oem 1 -l eng", save_debug=False)
+            # print(raw_price)
 
             # get the numbers from the string
             numbers = re.findall(r'\d+', raw_price)
@@ -190,6 +193,7 @@ def scan_one_day_full(data):
 
             # Increment item index after processing
             j += 1
+            recent_raw_price = str(raw_price)
 
         print('Finished, changing type')
         pyautogui.click(type_market_pos)
@@ -199,7 +203,10 @@ def scan_one_day_full(data):
     
     # Simpan ke clipboard
     pyperclip.copy(prices_string)
-    print("All prices have been copied to clipboard. You can paste them into Excel now.")
+    time_elapsed = time.time() - time_started
+    # change to minute
+    time_elapsed = time_elapsed / 60
+    print(f"Elapsed {time_elapsed:.2f} min. All prices have been copied to clipboard. You can paste them into Excel now.")
 
 if __name__ == '__main__':
     data = hp.load_from_json(json_path) # Load data from JSON
