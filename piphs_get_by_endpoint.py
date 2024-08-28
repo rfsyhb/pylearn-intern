@@ -2,6 +2,7 @@ import requests
 from datetime import datetime, timedelta
 import time
 import pyperclip
+from plyer import notification 
 
 # URL dasar
 base_url = "https://www.bi.go.id/hargapangan/WebSite/Home/GetGridData1"
@@ -45,11 +46,30 @@ jenis = "1"
 periode = "1"
 provId = "22"
 
+# List bulan
+month_list = {
+    "Januari": 1,
+    "Februari": 2,
+    "Maret": 3,
+    "April": 4,
+    "Mei": 5,
+    "Juni": 6,
+    "Juli": 7,
+    "Agustus": 8,
+    "September": 9,
+    "Oktober": 10,
+    "November": 11,
+    "Desember": 12
+}
+
+# Input bulan
+print(", ".join(list(month_list.keys())))
+selected_month = input("Masukkan nama bulan (huruf pertama kapital): ")
+month = month_list[selected_month]
+
 # Tanggal mulai dan akhir
 start = 1
-end = 28
-
-month = 2
+end = int(input("Masukkan tanggal akhir: "))
 
 start_date = datetime(2023, month, start)
 end_date = datetime(2023, month, end)
@@ -107,4 +127,10 @@ nilai_string = "\n".join(data_hasil)
 # Salin ke clipboard
 pyperclip.copy(nilai_string)
 print("Data telah disalin ke clipboard. Silakan paste di Excel.")
-print(f"Elapsed time: {time.time() - start_time} seconds")
+print(f"{list(month_list.keys())[list(month_list.values()).index(month)]} finished in {time.time() - start_time} seconds")
+
+notification.notify(
+    title='Proses Selesai',
+    message='Pengambilan data dari API telah selesai.',
+    timeout=10  # durasi notifikasi dalam detik
+)
