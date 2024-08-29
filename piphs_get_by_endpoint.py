@@ -61,6 +61,8 @@ month_list = {
     "November": 11,
     "Desember": 12
 }
+# Input tahun
+year = int(input("Masukkan tahun (ex: 2023): "))
 
 # Input bulan
 print(", ".join(list(month_list.keys())))
@@ -71,8 +73,8 @@ month = month_list[selected_month]
 start = 1
 end = int(input("Masukkan tanggal akhir: "))
 
-start_date = datetime(2023, month, start)
-end_date = datetime(2023, month, end)
+start_date = datetime(year, month, start)
+end_date = datetime(year, month, end)
 
 # Fungsi untuk format tanggal sesuai kebutuhan URL
 def format_date(date):
@@ -130,7 +132,7 @@ print("Data telah disalin ke clipboard. Silakan paste di Excel.")
 print(f"{list(month_list.keys())[list(month_list.values()).index(month)]} finished in {time.time() - start_time} seconds")
 
 notification.notify(
-    title='Proses Selesai',
+    title=f'Get {selected_month} data finished',
     message='Pengambilan data dari API telah selesai.',
     timeout=10  # durasi notifikasi dalam detik
 )
