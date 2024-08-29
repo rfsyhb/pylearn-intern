@@ -122,6 +122,6 @@ with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
         df = df.drop(columns=["SORT_KEY"])
 
         # Save DataFrame to a new sheet in Excel file
-        df.to_excel(writer, sheet_name=month, index=False)
+        df.to_excel(writer, sheet_name=month.upper(), index=False)
 
 print(f"Excel template created successfully as '{output_path}'.")
