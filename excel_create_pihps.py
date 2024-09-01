@@ -1,14 +1,12 @@
 import pandas as pd
 
-# Path to save the Excel file
-output_path = './docs/excel_template.xlsx'
 # Dates, month value is the number of days in that month
 # THIS IS EXAMPLE! get the real date from https://www.timeanddate.com/calendar/
 dates = {
-    "year": 2023,
+    "year": 2022,
     "month": {
         "Januari": 31,
-        "Februari": 28,
+        "Februari": 29,
         "Maret": 31,
         "April": 30,
         "Mei": 31,
@@ -21,6 +19,9 @@ dates = {
         "Desember": 31
     },
 }
+
+# Path to save the Excel file
+output_path = f'./docs/PIHPS_KALTENG_{dates["year"]}.xlsx'
 
 # Define variables
 cities = ["Kota Palangkaraya", "Kota Sampit"]
@@ -61,19 +62,37 @@ commodities = {
     ]
 }
 
-# Initialize Excel writer
-with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
+def main():
+    # Initialize Excel writer
+    with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
 
-    # Loop through each month
-    for month, days in dates["month"].items():
-        # Create data for the Excel sheet
-        data = []
-        for day in range(1, days + 1):
-            for city in cities:
-                for market in markets:
-                    for commodity, types in commodities.items():
-                        if isinstance(types, list):
-                            for type_name in types:
+        # Loop through each month
+        for month, days in dates["month"].items():
+            # Create data for the Excel sheet
+            data = []
+            for day in range(1, days + 1):
+                for city in cities:
+                    for market in markets:
+                        for commodity, types in commodities.items():
+                            if isinstance(types, list):
+                                for type_name in types:
+                                    data.append([
+                                        f"{dates['year']}-{list(dates['month'].keys()).index(month)+1:02d}-{day:02d}",  # TANGGAL
+                                        "",  # PERIODE
+                                        "BI",  # SUMBER
+                                        "Konsumen",  # RESPONDEN
+                                        "KALIMANTAN TENGAH",  # PROVINSI
+                                        city,  # KOTA KAB
+                                        market,  # PASAR
+                                        f'{commodity} ( Rp./Kg. )' if commodity !="Minyak Goreng" else f'{commodity} ( Rp./Liter )',  # KOMODITAS
+                                        "Kg" if commodity != "Minyak Goreng" else "Lt",  # UNIT
+                                        type_name,  # JENIS_MERK
+                                        "",  # KEMASAN
+                                        "",  # HARGA_SAT
+                                        "",  # SAT
+                                        markets.index(market)  # SORT_KEY for custom market order
+                                    ])
+                            else:
                                 data.append([
                                     f"{dates['year']}-{list(dates['month'].keys()).index(month)+1:02d}-{day:02d}",  # TANGGAL
                                     "",  # PERIODE
@@ -82,46 +101,32 @@ with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
                                     "KALIMANTAN TENGAH",  # PROVINSI
                                     city,  # KOTA KAB
                                     market,  # PASAR
-                                    commodity,  # KOMODITAS
+                                    f'{commodity} ( Rp./Kg. )' if commodity !="Minyak Goreng" else f'{commodity} ( Rp./Liter )',  # KOMODITAS
                                     "Kg" if commodity != "Minyak Goreng" else "Lt",  # UNIT
-                                    type_name,  # JENIS_MERK
+                                    types,  # JENIS_MERK
                                     "",  # KEMASAN
                                     "",  # HARGA_SAT
                                     "",  # SAT
                                     markets.index(market)  # SORT_KEY for custom market order
                                 ])
-                        else:
-                            data.append([
-                                f"{dates['year']}-{list(dates['month'].keys()).index(month)+1:02d}-{day:02d}",  # TANGGAL
-                                "",  # PERIODE
-                                "BI",  # SUMBER
-                                "Konsumen",  # RESPONDEN
-                                "KALIMANTAN TENGAH",  # PROVINSI
-                                city,  # KOTA KAB
-                                market,  # PASAR
-                                commodity,  # KOMODITAS
-                                "Kg" if commodity != "Minyak Goreng" else "Lt",  # UNIT
-                                types,  # JENIS_MERK
-                                "",  # KEMASAN
-                                "",  # HARGA_SAT
-                                "",  # SAT
-                                markets.index(market)  # SORT_KEY for custom market order
-                            ])
 
-        # Convert data to DataFrame
-        df = pd.DataFrame(data, columns=[
-            "TANGGAL", "PERIODE", "SUMBER", "RESPONDEN", "PROVINSI", 
-            "KOTA_KAB", "PASAR", "KOMODITAS", "UNIT", "JENIS_MERK", 
-            "KEMASAN", "HARGA_SAT", "SAT", "SORT_KEY"
-        ])
-        
-        # Sort DataFrame by TANGGAL, KOTA_KAB, and custom SORT_KEY for PASAR
-        df = df.sort_values(by=["TANGGAL", "KOTA_KAB", "SORT_KEY"], ascending=[True, True, True])
+            # Convert data to DataFrame
+            df = pd.DataFrame(data, columns=[
+                "TANGGAL", "PERIODE", "SUMBER", "RESPONDEN", "PROVINSI", 
+                "KOTA_KAB", "PASAR", "KOMODITAS", "UNIT", "JENIS_MERK", 
+                "KEMASAN", "HARGA_SAT", "SAT", "SORT_KEY"
+            ])
+            
+            # Sort DataFrame by TANGGAL, KOTA_KAB, and custom SORT_KEY for PASAR
+            df = df.sort_values(by=["TANGGAL", "KOTA_KAB", "SORT_KEY"], ascending=[True, True, True])
 
-        # Drop the SORT_KEY column before saving to Excel
-        df = df.drop(columns=["SORT_KEY"])
+            # Drop the SORT_KEY column before saving to Excel
+            df = df.drop(columns=["SORT_KEY"])
 
-        # Save DataFrame to a new sheet in Excel file
-        df.to_excel(writer, sheet_name=month.upper(), index=False)
+            # Save DataFrame to a new sheet in Excel file
+            df.to_excel(writer, sheet_name=month.upper(), index=False)
 
-print(f"Excel template created successfully as '{output_path}'.")
+    print(f"Excel template created successfully as '{output_path}'.")
+
+if __name__ == "__main__":
+    main()
