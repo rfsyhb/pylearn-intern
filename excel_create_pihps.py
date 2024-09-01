@@ -6,7 +6,7 @@ dates = {
     "year": 2022,
     "month": {
         "Januari": 31,
-        "Februari": 29,
+        "Februari": 28,
         "Maret": 31,
         "April": 30,
         "Mei": 31,
