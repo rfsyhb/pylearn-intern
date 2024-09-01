@@ -1,9 +1,13 @@
+""" Data linked with excel_create_pihps.py variables """
+
 import requests
 from datetime import datetime, timedelta
 import time
 import pyperclip
-from plyer import notification
+# from plyer import notification
 import json
+import excel_create_pihps as ecp
+import pymsgbox
 
 # Parameter URL
 prov_id = 22
@@ -44,7 +48,10 @@ priceType_dict = {
 }
 
 # Definisi rentang tanggal
-year = int(input("Masukkan tahun (ex: 2023): "))
+# year = int(input("Masukkan tahun (ex: 2023): "))
+year = ecp.dates["year"]
+print(f'year is {year}')
+
 month_list = {
     "Januari": 1, "Februari": 2, "Maret": 3, "April": 4, "Mei": 5,
     "Juni": 6, "Juli": 7, "Agustus": 8, "September": 9, "Oktober": 10,
@@ -55,7 +62,9 @@ selected_month = input("Masukkan nama bulan (huruf pertama kapital): ")
 month = month_list[selected_month]
 
 start = 1
-end = int(input("Masukkan tanggal akhir: "))
+# end = int(input("Masukkan tanggal akhir: "))
+end = int(ecp.dates["month"][selected_month])
+print(f'end month is {end}')
 
 start_date = datetime(year, month, start)
 end_date = datetime(year, month, end)
@@ -172,8 +181,10 @@ pyperclip.copy(output_string)
 print("Data telah disalin ke clipboard dalam format kolom. Silakan paste di Excel.")
 print(f"{list(month_list.keys())[list(month_list.values()).index(month)]} finished in {time.time() - start_time} seconds")
 
-notification.notify(
-    title=f'Get {selected_month} data finished',
-    message='Pengambilan data dari API telah selesai.',
-    timeout=10  # durasi notifikasi dalam detik
-)
+# notification.notify(
+#     title=f'Get {selected_month} data finished',
+#     message='Pengambilan data dari API telah selesai.',
+#     timeout=10  # durasi notifikasi dalam detik
+# )
+
+pymsgbox.alert(f'Get {selected_month} data finished.', 'Finished')  # Pop-up message box
