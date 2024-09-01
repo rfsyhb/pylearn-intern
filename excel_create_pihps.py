@@ -3,7 +3,7 @@ import pandas as pd
 # Dates, month value is the number of days in that month
 # THIS IS EXAMPLE! get the real date from https://www.timeanddate.com/calendar/
 dates = {
-    "year": 2022,
+    "year": 2024,
     "month": {
         "Januari": 31,
         "Februari": 29,
