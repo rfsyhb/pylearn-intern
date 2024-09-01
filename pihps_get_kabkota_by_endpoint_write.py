@@ -1,3 +1,5 @@
+""" Data linked with excel_create_pihps.py variables """
+
 import requests
 from datetime import datetime, timedelta
 import time
