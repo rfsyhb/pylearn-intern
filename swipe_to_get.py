@@ -18,7 +18,7 @@ def get_region():
     height = right_bottom[1] - left_top[1]
 
     region = (left_top[0], left_top[1], width, height)
-    print(f"region: {region}")
+    print(f"Region: {region}")
     return region
 
 # Mendapatkan posisi awal
@@ -47,6 +47,9 @@ time.sleep(1)
 # Menghitung jarak yang harus ditempuh dalam piksel
 distance = pos2[0] - pos[0]
 
+# Variabel untuk menyimpan deteksi tanggal sebelumnya
+previous_date_detected = ""
+
 # Loop untuk menggerakkan kursor dari posisi awal ke posisi akhir
 for x_offset in range(0, distance, 1):  # Mengubah posisi x setiap 1 piksel
     # Menggerakkan kursor dan memperbarui region_date
@@ -62,11 +65,19 @@ for x_offset in range(0, distance, 1):  # Mengubah posisi x setiap 1 piksel
 
     # Mengambil teks dari region harga
     detected_text = hp.get_text_from_region(region_price, config="--psm 7 --oem 1 -l eng", save_debug=True)
-    print(f'Deteksi harga: {detected_text}')
     
     # Mengambil teks dari region tanggal
     detected_date = hp.get_text_from_region(region_date, config="--psm 7 --oem 1 -l eng", save_debug=True)
-    print(f'Deteksi tanggal: {detected_date}')
+    
+    # Membatasi output ke tiga kata pertama saja
+    detected_date_words = detected_date.split()[:3]
+    detected_date_trimmed = " ".join(detected_date_words)
+
+    # Hanya mencetak jika deteksi tanggal berbeda dari iterasi sebelumnya
+    if detected_date_trimmed != previous_date_detected:
+        print(f'Deteksi tanggal baru: {detected_date_trimmed}')
+        print(f'Deteksi harga: {detected_text}')
+        previous_date_detected = detected_date_trimmed
 
     time.sleep(0.3)  # Jeda untuk menjaga kursor tetap aktif dan memicu hover
 
