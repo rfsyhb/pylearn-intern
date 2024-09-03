@@ -34,6 +34,10 @@ nama_komoditas = input("Masukkan nama komoditas: ")
 # Rate
 rate = input("Masukkan rate: ")
 
+# Index angka
+indexangka = int(input("Ada berapa kata hingga harga?: "))
+indexangka -= 1
+
 # Mendapatkan posisi awal
 print('Klik "s" untuk mendapatkan posisi awal.')
 keyboard.wait('s')
@@ -47,9 +51,11 @@ pos2 = pg.position()
 print(f'Posisi akhir: {pos2}')
 
 # Mendapatkan region price
+print('Region harga')
 region_price = get_region()
 
 # Mendapatkan region tanggal (statis)
+print('Region tanggal')
 region_date = get_region()
 
 # Memulai pada posisi awal
@@ -104,7 +110,7 @@ for x_offset in range(0, distance, 2):  # Mengubah posisi x setiap 1 piksel
     # Hanya mencetak jika deteksi tanggal berbeda dari iterasi sebelumnya dan valid
     if valid_date and valid_date != previous_date_detected:
         # Menggunakan regex untuk mengambil angka dari kata ketiga dalam teks harga
-        price_match = re.search(r'\b\d+(\.\d+)?\b', detected_text.split()[3])
+        price_match = re.search(r'\b\d+(\.\d+)?\b', detected_text.split()[indexangka])
         # price_value = price_match.group(0).replace('.', '') if price_match else 'N/A'
         price_value = price_match.group(0).replace('.', '.') if price_match else 'N/A'
 
