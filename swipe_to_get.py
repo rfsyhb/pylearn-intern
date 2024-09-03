@@ -5,7 +5,7 @@ import sys
 import re  # Import regex module
 import pandas as pd  # Import pandas for handling data
 import utils.helper as hp
-import get_weekly as gw
+import prototypes.get_weekly as gw
 
 awalan = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun",

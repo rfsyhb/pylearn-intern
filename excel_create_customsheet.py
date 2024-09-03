@@ -2,13 +2,13 @@ import pandas as pd
 import os
 
 # Variables
-year_create = 2024
+year_create = 2023
 excel_list = {
-    "Palangkaraya" : [
+    "Palangka Raya" : [
         "Pasar Hyper",
         "Pasar Super",
         "Pasar Mini",
-        "Pasar Besar",
+        "Pasar Besar (Payang)",
         "Pasar Kahayan"
     ],
     "Sampit" : [

@@ -3,6 +3,7 @@ import pytesseract as pt
 from PIL import Image, ImageEnhance
 import json
 import os
+import keyboard
 
 def preprocess_image(image, save_debug=False):
     # Hanya lakukan langkah yang diperlukan
@@ -48,3 +49,19 @@ def load_from_json(path):
     except json.JSONDecodeError:
         print(f"File '{path}' tidak berisi data JSON yang valid.")
         return None
+    
+def get_region():
+    print('Taruh kursor ke sudut kiri atas area, jika sudah tekan "s"')
+    keyboard.wait('s')
+    left_top = pg.position()
+
+    print('Taruh kursor ke sudut kanan bawah area, jika sudah tekan "s"')
+    keyboard.wait('s')
+    right_bottom = pg.position()
+
+    width = right_bottom[0] - left_top[0]
+    height = right_bottom[1] - left_top[1]
+
+    region = (left_top[0], left_top[1], width, height)
+    print(f"region: {region}")
+    return region
