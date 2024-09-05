@@ -16,7 +16,7 @@ komoditas_cair = [
 def update_unit_column(df):
     if 'Komoditas' in df.columns and 'Unit' in df.columns:
         # Perbarui kolom "unit" berdasarkan kondisi di atas
-        df['Unit'] = df['Komoditas'].apply(lambda x: 'L' if x in komoditas_cair else 'Kg')
+        df['Unit'] = df['Komoditas'].apply(lambda x: 'Lt' if x in komoditas_cair else 'Kg')
     return df
 
 # Iterasi melalui setiap file Excel di folder input
@@ -42,6 +42,6 @@ for input_file in os.listdir(input_dir):
         # Simpan dan tutup file output
         writer.close()
         
-        print(f"File {input_file} berhasil diperbarui dan disimpan ke {output_path} dengan kolom 'unit' yang diperbarui!")
+        print(f"File {input_file} berhasil diperbarui dan disimpan ke {output_path} dengan kolom 'Unit' yang diperbarui!")
 
-print("Proses pembaruan kolom 'unit' selesai untuk semua file.")
+print("Proses pembaruan kolom 'Unit' selesai untuk semua file.")
