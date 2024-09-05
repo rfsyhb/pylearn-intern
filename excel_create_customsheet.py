@@ -2,35 +2,35 @@ import pandas as pd
 import os
 
 # Variables
-year_create = 2023
+year_create = 2024
 excel_list = {
     "Palangka Raya" : [
-        "Pasar Hyper",
-        "Pasar Super",
-        "Pasar Mini",
-        "Pasar Besar (Payang)",
-        "Pasar Kahayan"
+        "Hypermart",
+        "Supermarket",
+        "Minimarket",
+        "Besar (Payang)",
+        "Kahayan"
     ],
     "Sampit" : [
-        "Pasar Super",
-        "Pasar Mini",
-        "Pasar Kramat",
-        "Pasar Berdikari",
+        "Supermarket",
+        "Minimarket",
+        "Kramat",
+        "Berdikari",
     ],
     "Kapuas" : [
-        "Pasar Super",
-        "Pasar Mini",
-        "Pasar Sari Mulya"
+        "Supermarket",
+        "Minimarket",
+        "Sari Mulya"
     ],
-    "Pangkalan Bun": [
-        "Pasar Super",
-        "Pasar Mini",
-        "Pasar Indrasari",
+    "Kotawaringin Barat": [
+        "Supermarket",
+        "Minimarket",
+        "Indrasari",
     ],
-    "Muara Teweh": [
-        "Pasar Super",
-        "Pasar Mini",
-        "Pasar Pendopo",
+    "Barito Utara": [
+        "Supermarket",
+        "Minimarket",
+        "Pendopo",
     ],
     "Barito Selatan": [
         "Plaza Beringin"
@@ -46,10 +46,10 @@ month_list = [
     "Juni",
     "Juli",
     "Agustus",
-    "September",
-    "Oktober",
-    "November",
-    "Desember"
+    # "September",
+    # "Oktober",
+    # "November",
+    # "Desember"
 ]
 
 # Create output directory if not exists
