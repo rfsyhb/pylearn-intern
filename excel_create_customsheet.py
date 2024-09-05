@@ -11,7 +11,7 @@ excel_list = {
         "Besar (Payang)",
         "Kahayan"
     ],
-    "Sampit" : [
+    "Kotawaringin Timur" : [
         "Supermarket",
         "Minimarket",
         "Kramat",
